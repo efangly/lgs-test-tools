@@ -1,27 +1,55 @@
 {
   "name": "lgs-test-tools",
-  "version": "0.1.0",
+  "version": "1.0.0",
+  "description": "LGS (Light Grid System) Test Tools - Modbus TCP testing application for 9x9 LED grid control",
   "private": true,
+  "author": {
+    "name": "LGS Team",
+    "email": "ldv.rde@gmail.com"
+  },
+  "keywords": [
+    "modbus",
+    "tcp",
+    "led",
+    "grid",
+    "testing",
+    "automation",
+    "next.js",
+    "react"
+  ],
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "lint:fix": "eslint --fix",
+    "type-check": "tsc --noEmit",
+    "test": "echo \"No tests yet\" && exit 0",
+    "docker:build": "docker build -t lgs-test-tools .",
+    "docker:run": "docker run -p 3000:3000 lgs-test-tools",
+    "docker:compose": "docker-compose up -d",
+    "docker:compose:simulator": "docker-compose --profile simulator up -d",
+    "clean": "rm -rf .next out node_modules/.cache"
   },
   "dependencies": {
+    "modbus-serial": "^8.0.21-no-serial-port",
+    "next": "15.5.2",
     "react": "19.1.0",
     "react-dom": "19.1.0",
-    "next": "15.5.2"
+    "react-icons": "^5.5.0",
+    "serialport": "^13.0.0",
+    "sweetalert2": "^11.22.5"
   },
   "devDependencies": {
-    "typescript": "^5",
+    "@eslint/eslintrc": "^3",
+    "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
-    "@tailwindcss/postcss": "^4",
-    "tailwindcss": "^4",
+    "daisyui": "^5.0.54",
     "eslint": "^9",
     "eslint-config-next": "15.5.2",
-    "@eslint/eslintrc": "^3"
+    "tailwindcss": "^4.1.12",
+    "typescript": "^5"
   }
 }
