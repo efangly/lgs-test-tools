@@ -158,18 +158,10 @@ export function TestCommandsPanel() {
       <div>
         <h3 className="text-lg font-medium mb-3">Write</h3>
         <div className="grid grid-cols-2 lg:grid-cols-1 gap-2">
-          <CommandButton
-            action="writeCoil"
-            color="orange"
-            disabled={!value}
-          >
+          <CommandButton action="writeCoil" color="orange" disabled={!value}>
             Single Coil
           </CommandButton>
-          <CommandButton
-            action="writeRegister"
-            color="orange"
-            disabled={!value}
-          >
+          <CommandButton action="writeRegister" color="orange" disabled={!value}>
             Single Register
           </CommandButton>
         </div>

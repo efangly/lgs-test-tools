@@ -7,6 +7,7 @@ export { TestCommandsPanel } from './TestCommandsPanel';
 export { default as ThemeToggle } from './ThemeToggle';
 export { ConnectionStatus } from './ConnectionStatus';
 export { ErrorBoundary } from './ErrorBoundary';
+export { ResetControl } from './ResetControl';
 
 // UI Components
 export { Dropdown, NumberInput, ActionButton } from './ui/FormControls';

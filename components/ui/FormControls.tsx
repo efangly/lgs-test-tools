@@ -46,6 +46,7 @@ interface NumberInputProps {
   min?: number;
   max?: number;
   className?: string;
+  disable?: boolean;
 }
 
 export function NumberInput({ 
@@ -54,7 +55,8 @@ export function NumberInput({
   onChange, 
   min = 1, 
   max = 255, 
-  className = "" 
+  className = "",
+  disable = false 
 }: NumberInputProps) {
   return (
     <div className={className}>
@@ -66,6 +68,7 @@ export function NumberInput({
         className="input input-bordered w-full"
         min={min}
         max={max}
+        disabled={disable}
       />
     </div>
   );
