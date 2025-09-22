@@ -41,7 +41,7 @@ export interface ModbusRequest {
   port?: number;
   unitId?: number;
   address?: number;
-  value?: string | number | boolean;
+  value?: string | number | boolean | (string | number | boolean)[];
   quantity?: number;
 }
 
@@ -67,4 +67,5 @@ export type ModbusAction =
   | 'readHoldingRegisters'
   | 'readInputRegisters'
   | 'writeCoil'
+  | 'writeCoils'
   | 'writeRegister';

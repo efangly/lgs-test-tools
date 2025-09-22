@@ -115,6 +115,30 @@ export const validateModbusRequest = (request: ModbusRequest): ValidationResult 
         if (!registerResult.isValid) return registerResult;
       }
       break;
+
+    case 'writeCoils':
+      if (unitId === undefined || address === undefined || value === undefined) {
+        return { isValid: false, error: 'Unit ID, address, and values are required for writeCoils operation' };
+      }
+      
+      if (!Array.isArray(value)) {
+        return { isValid: false, error: 'Values must be an array for writeCoils operation' };
+      }
+      
+      if (value.length === 0) {
+        return { isValid: false, error: 'Values array cannot be empty' };
+      }
+      
+      if (value.length > 1968) { // Modbus specification limit for write multiple coils
+        return { isValid: false, error: 'Cannot write more than 1968 coils at once' };
+      }
+      
+      const coilsUnitIdResult = validateUnitId(unitId);
+      if (!coilsUnitIdResult.isValid) return coilsUnitIdResult;
+      
+      const coilsAddressResult = validateAddress(address);
+      if (!coilsAddressResult.isValid) return coilsAddressResult;
+      break;
   }
 
   return { isValid: true };

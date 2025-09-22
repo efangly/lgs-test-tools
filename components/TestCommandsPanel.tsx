@@ -9,18 +9,28 @@ export function TestCommandsPanel() {
   const [address, setAddress] = useState(0);
   const [value, setValue] = useState<string>('');
   const [quantity, setQuantity] = useState(1);
+  const [multipleValues, setMultipleValues] = useState<string>('');
 
   const { addResult } = useResults();
   const { loading, executeCommand } = useModbusAPI();
 
   const handleCommand = async (action: ModbusAction) => {
-    let commandValue: string | number | boolean | undefined;
+    let commandValue: string | number | boolean | (string | number | boolean)[] | undefined;
 
     // Handle different value types based on action
     if (action === 'writeCoil') {
       commandValue = value.toLowerCase() === 'true';
     } else if (action === 'writeRegister') {
       commandValue = parseInt(value) || 0;
+    } else if (action === 'writeCoils') {
+      // Parse multiple values from comma-separated string
+      const valuesArray = multipleValues.split(',').map(v => {
+        const trimmed = v.trim().toLowerCase();
+        if (trimmed === 'true' || trimmed === '1' || trimmed === 'on') return true;
+        if (trimmed === 'false' || trimmed === '0' || trimmed === 'off') return false;
+        return Boolean(trimmed);
+      });
+      commandValue = valuesArray;
     }
 
     const result = await executeCommand({
@@ -157,13 +167,40 @@ export function TestCommandsPanel() {
       {/* Write Commands */}
       <div>
         <h3 className="text-lg font-medium mb-3">Write</h3>
-        <div className="grid grid-cols-2 lg:grid-cols-1 gap-2">
+        <div className="grid grid-cols-1 gap-2">
           <CommandButton action="writeCoil" color="orange" disabled={!value}>
             Single Coil
           </CommandButton>
           <CommandButton action="writeRegister" color="orange" disabled={!value}>
             Single Register
           </CommandButton>
+          
+          {/* Multiple Coils Section */}
+          <div className="border-t pt-3 mt-3">
+            <h4 className="text-md font-medium mb-2">Multiple Coils</h4>
+            <div className="mb-2">
+              <label className="block text-sm font-medium mb-1">
+                Values (comma-separated)
+              </label>
+              <input
+                type="text"
+                value={multipleValues}
+                onChange={(e) => setMultipleValues(e.target.value)}
+                className="input input-bordered w-full"
+                placeholder="true,false,1,0,on,off"
+              />
+              <div className="text-xs text-gray-500 mt-1">
+                Examples: true,false,true | 1,0,1,0 | on,off,on
+              </div>
+            </div>
+            <CommandButton 
+              action="writeCoils" 
+              color="orange" 
+              disabled={!multipleValues.trim()}
+            >
+              Write Multiple Coils
+            </CommandButton>
+          </div>
         </div>
       </div>
     </div>

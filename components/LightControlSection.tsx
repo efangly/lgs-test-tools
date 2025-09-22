@@ -51,7 +51,7 @@ export function LightControlSection({ lightPosition, onPositionChange }: LightCo
     <div>
       {/* Header */}
       <div className="flex items-center justify-between mb-3">
-        <h2 className="text-lg font-medium mb-3">Light Controls</h2>
+        <h2 className="text-lg font-medium">Light Controls</h2>
         <label className="label cursor-pointer">
           <span className="label-text mr-2">Broadcast</span>
           <input
@@ -70,7 +70,7 @@ export function LightControlSection({ lightPosition, onPositionChange }: LightCo
           value={lightPosition.row}
           onChange={(value) => onPositionChange({ ...lightPosition, row: value })}
           disable={boardcast}
-          max={9}
+          max={10}
         />
         <Dropdown
           label="Col"

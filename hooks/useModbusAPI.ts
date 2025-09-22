@@ -7,7 +7,7 @@ interface ModbusCommand {
   unitId: number;
   address: number;
   quantity?: number;
-  value?: string | number | boolean;
+  value?: string | number | boolean | (string | number | boolean)[];
 }
 
 export const useModbusAPI = () => {

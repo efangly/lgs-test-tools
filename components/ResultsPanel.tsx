@@ -24,11 +24,11 @@ export function ResultsPanel() {
                 <span className="font-medium">{result.action}</span>
                 <span className="text-sm text-gray-500">{result.timestamp}</span>
               </div>
-              <p className={`text-sm ${result.success ? 'text-green-700 dark:text-green-300' : 'text-red-700 dark:text-red-300'}`}>
+              <p className={`text-sm ${result.success ? 'text-green-700' : 'text-red-700'}`}>
                 {result.message}
               </p>
               {result.data && (
-                <div className="mt-2 p-2 bg-gray-100 dark:bg-gray-700 rounded text-sm">
+                <div className="mt-2 p-2 rounded text-sm">
                   <strong>Data:</strong> {JSON.stringify(result.data)}
                 </div>
               )}

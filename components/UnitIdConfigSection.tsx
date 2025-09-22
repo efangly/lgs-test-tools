@@ -67,7 +67,7 @@ export function UnitIdConfigSection() {
           <h3 className="text-sm font-medium mb-2 text-base-content/70">Current Device</h3>
           <div className="grid grid-cols-3 gap-2">
             <NumberInput label="Current ID" value={currentUnitId} onChange={setCurrentUnitId} min={1} max={255} />
-            <Dropdown label="Row" value={currentPosition.row} onChange={setCurrentRow} max={9} />
+            <Dropdown label="Row" value={currentPosition.row} onChange={setCurrentRow} max={10} />
             <Dropdown label="Col" value={currentPosition.col} onChange={setCurrentCol} max={9} />
           </div>
         </div>
@@ -77,7 +77,7 @@ export function UnitIdConfigSection() {
       <div className="space-y-3">
         <div className="grid grid-cols-3 gap-2">
           <NumberInput label="New ID" value={newUnitId} onChange={setNewUnitId} min={1} max={255} />
-          <Dropdown label="Row" value={newPosition.row} onChange={setNewRow} max={9} />
+          <Dropdown label="Row" value={newPosition.row} onChange={setNewRow} max={10} />
           <Dropdown label="Col" value={newPosition.col} onChange={setNewCol} max={9} />
         </div>
 

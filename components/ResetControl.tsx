@@ -33,9 +33,9 @@ export function ResetControl() {
     }
   };
   return (
-    <>
+    <div className="grid grid-cols-1">
       <div className="flex items-center justify-between mb-3">
-        <h2 className="text-lg font-medium mb-3">Factory Reset</h2>
+        <h2 className="text-lg font-medium">Factory Reset</h2>
         <label className="label cursor-pointer">
           <span className="label-text mr-2">Broadcast</span>
           <input
@@ -47,17 +47,17 @@ export function ResetControl() {
         </label>
       </div>
       <div className="space-y-3">
-        <div className="grid grid-cols-3 gap-2">
-          <NumberInput label="ID" value={unitId} onChange={setUnitId} min={0} max={255} disable={boardcast} />
-          <Dropdown label="Row" value={position.row} onChange={setRow} max={9} disable={boardcast} />
-          <Dropdown label="Col" value={position.col} onChange={setCol} max={9} disable={boardcast} />
+          <div className="grid grid-cols-3 gap-2">
+            <NumberInput label="ID" value={unitId} onChange={setUnitId} min={0} max={255} disable={boardcast} />
+            <Dropdown label="Row" value={position.row} onChange={setRow} max={10} disable={boardcast} />
+            <Dropdown label="Col" value={position.col} onChange={setCol} max={9} disable={boardcast} />
+          </div>
+          <div>
+            <ActionButton onClick={handleSetUnitId} disabled={loading} loading={loading} variant="primary" className="w-full">
+              Reset
+            </ActionButton>
+          </div>
         </div>
-        <div>
-          <ActionButton onClick={handleSetUnitId} disabled={loading} loading={loading} variant="primary" className="w-full">
-            Reset
-          </ActionButton>
-        </div>
-      </div>
-    </>
+    </div>
   )
 }

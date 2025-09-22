@@ -144,6 +144,38 @@ export class ModbusService {
   }
 
   /**
+   * Write Multiple Coils (Function Code 15)
+   */
+  async writeCoils(unitId: number, address: number, values: (string | number | boolean)[]): Promise<ModbusResponse> {
+    if (!this.isConnected()) {
+      return { success: false, error: 'Not connected to Modbus server' };
+    }
+
+    if (!values || values.length === 0) {
+      return { success: false, error: 'Values array cannot be empty' };
+    }
+
+    try {
+      // Convert all values to boolean array
+      const boolValues = values.map(value => this.convertToBoolean(value));
+      
+      this.client!.setID(unitId);
+      await this.client!.writeCoils(address, boolValues);
+      
+      return { 
+        success: true, 
+        message: `Written ${boolValues.length} coils starting at address ${address}`,
+        data: { writtenValues: boolValues, startAddress: address, count: boolValues.length }
+      };
+    } catch (error) {
+      return { 
+        success: false,
+        error: `Failed to write multiple coils: ${error instanceof Error ? error.message : 'Unknown error'}` 
+      };
+    }
+  }
+
+  /**
    * Write Single Register (Function Code 6)
    */
   async writeRegister(unitId: number, address: number, value: string | number | boolean): Promise<ModbusResponse> {
@@ -212,10 +244,22 @@ export class ModbusService {
         return this.readInputRegisters(unitId!, address!, quantity);
       
       case 'writeCoil':
-        return this.writeCoil(unitId!, address!, value!);
+        if (Array.isArray(value)) {
+          return { success: false, error: 'Single value expected for writeCoil operation' };
+        }
+        return this.writeCoil(unitId!, address!, value as string | number | boolean);
+      
+      case 'writeCoils':
+        if (!Array.isArray(value)) {
+          return { success: false, error: 'Values must be an array for writeCoils operation' };
+        }
+        return this.writeCoils(unitId!, address!, value as (string | number | boolean)[]);
       
       case 'writeRegister':
-        return this.writeRegister(unitId!, address!, value!);
+        if (Array.isArray(value)) {
+          return { success: false, error: 'Single value expected for writeRegister operation' };
+        }
+        return this.writeRegister(unitId!, address!, value as string | number | boolean);
       
       default:
         return { success: false, error: 'Invalid action' };

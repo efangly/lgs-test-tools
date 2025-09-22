@@ -1,35 +1,64 @@
 'use client';
 
-import { LightPanel, Navbar, ResultsPanel, TestCommandsPanel } from '@/components';
+import { useState } from 'react';
+import { LightPanel, Navbar, ReadControl, ResultsPanel, TestCommandsPanel } from '@/components';
 import { ResultsProvider } from '@/hooks';
 
 export default function Home() {
+  const [activeTab, setActiveTab] = useState<'lights' | 'commands' | 'read'>('lights');
+
   return (
     <ResultsProvider>
       <div className="min-h-screen bg-base-200">
         <div className="container mx-auto">
           <Navbar />
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-2 mt-2">
-            {/* Test Light Panel */}
-            <div className="card bg-base-100 shadow-xl">
-              <div className="card-body p-2 md:p-4">
-                <LightPanel />
+
+          {/* Tabs Navigation */}
+          <div className="tabs tabs-boxed my-2 justify-center bg-base-100 shadow-xl rounded-2xl">
+            <button
+              className={`tab text-lg font-medium ${activeTab === 'lights' ? 'tab-active' : ''}`}
+              onClick={() => setActiveTab('lights')}
+            >
+              Light Panel
+            </button>
+            <button
+              className={`tab text-lg font-medium ${activeTab === 'commands' ? 'tab-active' : ''}`}
+              onClick={() => setActiveTab('commands')}
+            >
+              Test Commands
+            </button>
+          </div>
+
+          {/* Tab Content */}
+          {activeTab === 'lights' && (
+            <>
+              <div className="card bg-base-100 shadow-xl">
+                <div className="card-body p-2 md:p-4">
+                  <LightPanel />
+                </div>
+              </div>
+              <ReadControl />
+            </>
+          )}
+
+          {activeTab === 'commands' && (
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-2">
+              {/* Test Commands Panel */}
+              <div className="card bg-base-100 shadow-xl">
+                <div className="card-body p-2 md:p-4">
+                  <TestCommandsPanel />
+                </div>
+              </div>
+
+              {/* Results Panel */}
+              <div className="card bg-base-100 shadow-xl">
+                <div className="card-body p-2 md:p-4">
+                  <h2 className="card-title">Results</h2>
+                  <ResultsPanel />
+                </div>
               </div>
             </div>
-            {/* Test Commands Panel */}
-            <div className="card bg-base-100 shadow-xl">
-              <div className="card-body p-2 md:p-4">
-                <TestCommandsPanel />
-              </div>
-            </div>
-          </div>
-          {/* Results Panel */}
-          <div className="card bg-base-100 shadow-xl mt-2">
-            <div className="card-body p-2 md:p-4">
-              <h2 className="card-title">Results</h2>
-              <ResultsPanel />
-            </div>
-          </div>
+          )}
         </div>
       </div>
     </ResultsProvider>
