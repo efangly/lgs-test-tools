@@ -19,7 +19,7 @@ export function ReadControl() {
   const [unitRegisterValues, setUnitRegisterValues] = useState<UnitRegisterValues[]>([]);
   const [isReading, setIsReading] = useState(false);
 
-  const { executeCommand, loading } = useModbusAPI();
+  const { executeCommand } = useModbusAPI();
   const { addResult } = useResults();
 
   const FIXED_ADDRESS = 0;
@@ -78,7 +78,7 @@ export function ReadControl() {
   };
 
   const setRowResult = (value: number) => {
-    let allRows: string[] = [];
+    const allRows: string[] = [];
     for (let i = 1; i < 9; i++) allRows.push(((value * 10) + i).toString());
     setUnitIds(allRows.join(','));
     setRow(value);
@@ -173,7 +173,7 @@ export function ReadControl() {
       {unitRegisterValues.length === 0 && !isReading && (
         <div className="card bg-base-100 shadow-md">
           <div className="card-body text-center py-8">
-            <p className="text-gray-500">No register values to display. Enter Unit IDs and click "Read Registers" to get started.</p>
+            <p className="text-gray-500">No register values to display. Enter Unit IDs and click Read Registers to get started.</p>
             <p className="text-xs text-gray-400 mt-2">Fixed: Address=0, Quantity=5</p>
           </div>
         </div>

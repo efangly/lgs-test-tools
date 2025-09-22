@@ -5,7 +5,6 @@ import { LightPosition } from '@/types';
 import { LightControlSection } from './LightControlSection';
 import { UnitIdConfigSection } from './UnitIdConfigSection';
 import { ResetControl } from './ResetControl';
-import { ReadControl } from './ReadControl';
 
 export function LightPanel() {
   const [lightPosition, setLightPosition] = useState<LightPosition>({ row: 1, col: 1, led: 1 });
