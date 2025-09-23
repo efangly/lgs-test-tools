@@ -14,7 +14,7 @@ export default function Home() {
           <Navbar />
 
           {/* Tabs Navigation */}
-          <div className="tabs tabs-boxed my-2 justify-center bg-base-100 shadow-xl rounded-2xl">
+          <div className="tabs tabs-boxed p-2 my-2 justify-center bg-base-100 shadow-xl rounded-2xl">
             <button
               className={`tab text-lg font-medium ${activeTab === 'lights' ? 'tab-active' : ''}`}
               onClick={() => setActiveTab('lights')}

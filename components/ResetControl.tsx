@@ -33,8 +33,8 @@ export function ResetControl() {
     }
   };
   return (
-    <div className="grid grid-cols-1">
-      <div className="flex items-center justify-between mb-3">
+    <div>
+      <div className="flex justify-between mb-3">
         <h2 className="text-lg font-medium">Factory Reset</h2>
         <label className="label cursor-pointer">
           <span className="label-text mr-2">Broadcast</span>

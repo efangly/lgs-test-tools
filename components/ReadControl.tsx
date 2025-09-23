@@ -91,12 +91,12 @@ export function ReadControl() {
   return (
     <div className="space-y-2 my-2">
       <div className="card bg-base-100 shadow-xl">
-        <div className="card-body">
-          <h2 className="card-title text-lg font-semibold mb-4">Read LGS Info</h2>
+        <div className="card-body p-2">
+          <h2 className="card-title text-lg font-semibold mb-2">Read LGS Info</h2>
 
-          <div className="grid grid-cols-2 gap-4 mb-4">
+          <div className="grid grid-cols-2 gap-2 mb-2">
             <div>
-              <label className="block text-sm font-medium mb-1">Unit IDs (comma-separated)</label>
+              <label className="block text-sm font-medium mb-1">Unit IDs</label>
               <input
                 type="text"
                 value={unitIds}
@@ -105,9 +105,6 @@ export function ReadControl() {
                 placeholder="1, 2, 3"
                 disabled={isReading}
               />
-              <div className="text-xs text-gray-500 mt-1">
-                Enter Unit IDs separated by commas (e.g., 1, 2, 3). Fixed: Address=0, Quantity=5
-              </div>
             </div>
             <Dropdown label="Row" value={row} onChange={(value) => setRowResult(value)} disable={isReading} max={10} />
           </div>
