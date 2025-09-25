@@ -53,7 +53,7 @@ export function NumberInput({
   label, 
   value, 
   onChange, 
-  min = 1, 
+  min = 0, 
   max = 255, 
   className = "",
   disable = false 

@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { useResults, useModbusAPI } from '@/hooks';
 import { ModbusAction } from '@/types';
+import { NumberInput } from './ui/FormControls';
 
 export function TestCommandsPanel() {
   const [unitId, setUnitId] = useState(0);
@@ -104,20 +105,20 @@ export function TestCommandsPanel() {
       <div>
         <h2 className="text-lg font-medium mb-3">Test Commands</h2>
         <div className="grid grid-cols-4 gap-2">
-          <InputField
+          <NumberInput
             label="Unit ID"
             value={unitId}
             onChange={(value) => setUnitId(Number(value))}
             min={0}
             max={255}
           />
-          <InputField
+          <NumberInput
             label="Address"
             value={address}
             onChange={(value) => {setAddress(Number(value))}}
             min={0}
           />
-          <InputField
+          <NumberInput
             label="Quantity"
             value={quantity}
             onChange={(value) => setQuantity(Number(value))}

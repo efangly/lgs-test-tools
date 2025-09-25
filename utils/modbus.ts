@@ -2,9 +2,9 @@
 import { ValidationResult, ModbusRequest } from '@/types';
 
 /**
- * Calculate unit ID from grid position (9x9 grid)
+ * Calculate unit ID from grid position (10x10 grid)
  */
-export const calculateGridUnitId = (row: number, col: number, gridSize: number = 9): number => {
+export const calculateGridUnitId = (row: number, col: number, gridSize: number = 10): number => {
   if (row < 1 || row > gridSize || col < 1 || col > gridSize) {
     throw new Error(`Row and column must be between 1 and ${gridSize}`);
   }
