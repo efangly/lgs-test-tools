@@ -32,11 +32,19 @@ export function ResetControl() {
       showError(`Failed to set Unit ID: ${error}`);
     }
   };
+  const handleSoftwareReset = async () => {
+    try {
+      await executeCommand({ action: 'writeCoil', unitId: 0, address: 504, value: true });
+      showSuccess(`Software reset command sent`);
+    } catch (error) {
+      showError(`Failed to perform software reset: ${error}`);
+    }
+  }
   return (
     <div className='card bg-base-100 shadow-xl'>
       <div className="card-body p-4">
         <div className="flex justify-between mb-3">
-          <h2 className="text-lg font-medium">Factory Reset</h2>
+          <h2 className="text-lg font-medium">Reset</h2>
           <label className="label cursor-pointer">
             <span className="label-text mr-2">Broadcast</span>
             <input
@@ -53,9 +61,12 @@ export function ResetControl() {
             <Dropdown label="Row" value={position.row} onChange={setRow} max={10} disable={boardcast} />
             <Dropdown label="Col" value={position.col} onChange={setCol} max={9} disable={boardcast} />
           </div>
-          <div>
+          <div className="grid grid-cols-2 gap-2">  
             <ActionButton onClick={handleSetUnitId} disabled={loading} loading={loading} variant="primary" className="w-full">
-              Reset
+              Factory Reset
+            </ActionButton>
+            <ActionButton onClick={handleSoftwareReset} disabled={loading} loading={loading} variant="error" className="w-full">
+              Software Reset
             </ActionButton>
           </div>
         </div>
