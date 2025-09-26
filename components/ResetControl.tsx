@@ -33,20 +33,21 @@ export function ResetControl() {
     }
   };
   return (
-    <div>
-      <div className="flex justify-between mb-3">
-        <h2 className="text-lg font-medium">Factory Reset</h2>
-        <label className="label cursor-pointer">
-          <span className="label-text mr-2">Broadcast</span>
-          <input
-            type="checkbox"
-            className="checkbox checkbox-accent"
-            checked={boardcast}
-            onChange={(e) => setBoardcast(e.target.checked)}
-          />
-        </label>
-      </div>
-      <div className="space-y-3">
+    <div className='card bg-base-100 shadow-xl'>
+      <div className="card-body p-4">
+        <div className="flex justify-between mb-3">
+          <h2 className="text-lg font-medium">Factory Reset</h2>
+          <label className="label cursor-pointer">
+            <span className="label-text mr-2">Broadcast</span>
+            <input
+              type="checkbox"
+              className="checkbox checkbox-accent"
+              checked={boardcast}
+              onChange={(e) => setBoardcast(e.target.checked)}
+            />
+          </label>
+        </div>
+        <div className="space-y-3">
           <div className="grid grid-cols-3 gap-2">
             <NumberInput label="ID" value={unitId} onChange={setUnitId} min={0} max={255} disable={boardcast} />
             <Dropdown label="Row" value={position.row} onChange={setRow} max={10} disable={boardcast} />
@@ -58,6 +59,7 @@ export function ResetControl() {
             </ActionButton>
           </div>
         </div>
+      </div>
     </div>
   )
 }

@@ -1,3 +1,8 @@
+interface DropdownOption {
+  value: number;
+  label: string;
+}
+
 interface DropdownProps {
   label: string;
   value: number;
@@ -6,17 +11,29 @@ interface DropdownProps {
   min?: number;
   className?: string;
   disable?: boolean;
+  options?: DropdownOption;
 }
 
-export function Dropdown({ 
-  label, 
-  value, 
-  onChange, 
-  max = 9, 
-  min = 1, 
+export function Dropdown({
+  label,
+  value,
+  onChange,
+  max = 9,
+  min = 1,
   className = "",
-  disable = false
+  disable = false,
+  options
 }: DropdownProps) {
+  // Use custom options if provided, otherwise generate numeric range
+  const dropdownOptions = Array.from({ length: max - min + 1 }, (_, i) => {
+    const optionValue = i + min;
+    return {
+      value: optionValue,
+      label: `${label} ${optionValue}`
+    };
+  });
+  if (options) dropdownOptions.push({ value: options.value, label: options.label });
+
   return (
     <div className={className}>
       <label className="block text-sm font-medium mb-1">{label}</label>
@@ -26,14 +43,11 @@ export function Dropdown({
         onChange={e => onChange(Number(e.target.value))}
         disabled={disable}
       >
-        {Array.from({ length: max - min + 1 }, (_, i) => {
-          const optionValue = i + min;
-          return (
-            <option key={optionValue} value={optionValue}>
-              {label} {optionValue}
-            </option>
-          );
-        })}
+        {dropdownOptions.map((option) => (
+          <option key={option.value} value={option.value}>
+            {option.label}
+          </option>
+        ))}
       </select>
     </div>
   );
@@ -49,14 +63,14 @@ interface NumberInputProps {
   disable?: boolean;
 }
 
-export function NumberInput({ 
-  label, 
-  value, 
-  onChange, 
-  min = 0, 
-  max = 255, 
+export function NumberInput({
+  label,
+  value,
+  onChange,
+  min = 0,
+  max = 255,
   className = "",
-  disable = false 
+  disable = false
 }: NumberInputProps) {
   return (
     <div className={className}>
@@ -83,13 +97,13 @@ interface ActionButtonProps {
   className?: string;
 }
 
-export function ActionButton({ 
-  onClick, 
-  disabled = false, 
-  loading = false, 
-  variant = 'primary', 
-  children, 
-  className = "" 
+export function ActionButton({
+  onClick,
+  disabled = false,
+  loading = false,
+  variant = 'primary',
+  children,
+  className = ""
 }: ActionButtonProps) {
   const variantClasses = {
     success: 'bg-green-500 hover:bg-green-600',

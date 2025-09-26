@@ -206,6 +206,45 @@ export class ModbusService {
   }
 
   /**
+   * Write Multiple Registers (Function Code 16)
+   */
+  async writeRegisters(unitId: number, address: number, values: (string | number | boolean)[]): Promise<ModbusResponse> {
+    if (!this.isConnected()) {
+      return { success: false, error: 'Not connected to Modbus server' };
+    }
+
+    if (!values || values.length === 0) {
+      return { success: false, error: 'Values array cannot be empty' };
+    }
+
+    try {
+      // Convert all values to number array
+      const numValues: number[] = [];
+      for (let i = 0; i < values.length; i++) {
+        const numValue = this.convertToNumber(values[i]);
+        if (numValue === null) {
+          return { success: false, error: `Value at index ${i} must be a valid number` };
+        }
+        numValues.push(numValue);
+      }
+      
+      this.client!.setID(unitId);
+      await this.client!.writeRegisters(address, numValues);
+      
+      return { 
+        success: true, 
+        message: `Written ${numValues.length} registers starting at address ${address}`,
+        data: { writtenValues: numValues, startAddress: address, count: numValues.length }
+      };
+    } catch (error) {
+      return { 
+        success: false,
+        error: `Failed to write multiple registers: ${error instanceof Error ? error.message : 'Unknown error'}` 
+      };
+    }
+  }
+
+  /**
    * Execute Modbus request
    */
   async executeRequest(request: ModbusRequest): Promise<ModbusResponse> {
@@ -260,6 +299,12 @@ export class ModbusService {
           return { success: false, error: 'Single value expected for writeRegister operation' };
         }
         return this.writeRegister(unitId!, address!, value as string | number | boolean);
+      
+      case 'writeRegisters':
+        if (!Array.isArray(value)) {
+          return { success: false, error: 'Values must be an array for writeRegisters operation' };
+        }
+        return this.writeRegisters(unitId!, address!, value as (string | number | boolean)[]);
       
       default:
         return { success: false, error: 'Invalid action' };

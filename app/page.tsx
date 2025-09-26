@@ -32,11 +32,7 @@ export default function Home() {
           {/* Tab Content */}
           {activeTab === 'lights' && (
             <>
-              <div className="card bg-base-100 shadow-xl">
-                <div className="card-body p-2 md:p-4">
-                  <LightPanel />
-                </div>
-              </div>
+              <LightPanel />
               <ReadControl />
             </>
           )}

@@ -68,4 +68,5 @@ export type ModbusAction =
   | 'readInputRegisters'
   | 'writeCoil'
   | 'writeCoils'
-  | 'writeRegister';
+  | 'writeRegister'
+  | 'writeRegisters';
