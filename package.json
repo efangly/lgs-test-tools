@@ -25,10 +25,13 @@
     "lint:fix": "eslint --fix",
     "type-check": "tsc --noEmit",
     "test": "echo \"No tests yet\" && exit 0",
+    "health": "curl -f http://localhost:3000/api/health || echo 'Health check failed'",
+    "health:json": "curl -s http://localhost:3000/api/health | jq '.' || echo 'Health check failed or jq not installed'",
     "docker:build": "docker build -t lgs-test-tools .",
     "docker:run": "docker run -p 3000:3000 lgs-test-tools",
     "docker:compose": "docker-compose up -d",
     "docker:compose:simulator": "docker-compose --profile simulator up -d",
+    "docker:health": "docker ps --filter name=lgs-test-tools --format 'table {{.Names}}\\t{{.Status}}'",
     "clean": "rm -rf .next out node_modules/.cache"
   },
   "dependencies": {
